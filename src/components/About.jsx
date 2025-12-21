@@ -30,8 +30,8 @@ export default function About() {
         </p>
 
         <a
-          href="/resume.pdf"
-          download
+          href="/Portfolio_/Elmer Alexis - Resume.pdf" 
+          download="Elmer Alexis - Resume.pdf"
           className="group inline-flex items-center px-8 py-3 bg-indigo-600 text-white font-bold rounded-xl hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-600/20"
         >
           <HiDownload className="mr-2 group-hover:bounce" />
