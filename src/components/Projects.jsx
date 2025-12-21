@@ -1,12 +1,19 @@
-import { HiExternalLink, HiCode } from "react-icons/hi";
+import { HiExternalLink, HiCode, HiCheckCircle } from "react-icons/hi";
 
 export default function Projects() {
   const projects = [
     {
+      name: "LukzTask Engine",
+      description: "A full-stack React/Django productivity engine featuring JWT authentication, real-time state synchronization, and a fixed-viewport glassmorphism UI with optimized container scrolling.",
+      tags: ["React", "Django REST", "JWT", "Tailwind v4"],
+      link: "#", 
+      status: "Completed" // New status indicator
+    },
+    {
       name: "Manufacturing ERP System",
       description: "A custom enterprise solution built with Django and MySQL. Automated production logs and improved data entry efficiency by 40%.",
       tags: ["Django", "MySQL", "Bootstrap"],
-      link: "#", // Add link or internal detail page
+      link: "#",
     },
     {
       name: "Responsive Blog & CMS",
@@ -37,11 +44,18 @@ export default function Projects() {
           {projects.map((proj) => (
             <div
               key={proj.name}
-              className="group bg-gray-900/50 border border-gray-700 p-8 rounded-2xl hover:border-indigo-500/50 transition-all duration-300 flex flex-col justify-between"
+              className="group bg-gray-900/50 border border-gray-700 p-8 rounded-2xl hover:border-indigo-500/50 transition-all duration-300 flex flex-col justify-between relative overflow-hidden"
             >
+              {/* Completed Badge for LukzTask */}
+              {proj.status === "Completed" && (
+                <div className="absolute top-4 right-12 flex items-center gap-1 px-2 py-1 bg-emerald-500/10 text-emerald-400 text-[10px] font-black uppercase tracking-tighter rounded-md border border-emerald-500/20">
+                  <HiCheckCircle /> {proj.status}
+                </div>
+              )}
+
               <div>
                 <div className="flex justify-between items-start mb-4">
-                  <div className="p-3 bg-indigo-500/10 rounded-lg text-indigo-400">
+                  <div className="p-3 bg-indigo-500/10 rounded-lg text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white transition-all duration-300">
                     <HiCode size={24} />
                   </div>
                   <a href={proj.link} className="text-gray-500 hover:text-white transition-colors">
