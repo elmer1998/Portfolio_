@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+section {
+  scroll-margin-top: 64px; /* mobile default */
+}
+
+@media (min-width: 640px) {
+  section {
+    scroll-margin-top: 80px; /* desktop */
+  }
+}
