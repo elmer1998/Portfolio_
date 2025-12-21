@@ -43,7 +43,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto flex justify-between items-center p-4">
         {/* Brand / Logo */}
         <h1 className="text-2xl font-extrabold tracking-tighter text-indigo-400 cursor-default">
-          ELMER
+          ELMER ALEXIS
         </h1>
 
         {/* Desktop Links */}
