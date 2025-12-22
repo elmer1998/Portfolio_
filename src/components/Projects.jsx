@@ -40,29 +40,33 @@ export default function Projects() {
   ];
 
   return (
-    <section id="projects" className="py-24 bg-gray-800 text-white px-4 sm:px-8">
+    <section 
+      id="projects" 
+      /* scroll-mt-20 ensures the navbar doesn't cover the title when clicking the link */
+      className="py-20 bg-gray-800 text-white px-4 sm:px-8 scroll-mt-20"
+    >
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-20">
+        <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4 tracking-tight">Featured Work</h2>
           <div className="w-20 h-1 bg-indigo-500 mx-auto rounded-full"></div>
-          <p className="text-gray-400 mt-6 max-w-lg mx-auto">
+          <p className="text-gray-400 mt-6 max-w-lg mx-auto text-sm sm:text-base">
             A collection of full-stack applications solving real-world business and technical challenges.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
           {projects.map((proj) => (
             <div
               key={proj.name}
-              className="group bg-gray-900/50 border border-gray-700 p-10 rounded-3xl hover:border-indigo-500/50 transition-all duration-500 flex flex-col justify-between relative overflow-hidden min-h-[480px]"
+              className="group bg-gray-900/50 border border-gray-700 p-8 sm:p-10 rounded-3xl hover:border-indigo-500/50 transition-all duration-500 flex flex-col justify-between relative overflow-hidden min-h-[440px]"
             >
-              {/* Status Badge */}
+              {/* Dynamic Status Badge */}
               {proj.status && (
                 <div className={`absolute top-6 right-8 flex items-center gap-1.5 px-3 py-1 ${
                   proj.status === "Completed" 
                   ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" 
                   : "bg-amber-500/10 text-amber-400 border-amber-500/20"
-                } text-[11px] font-bold uppercase tracking-widest rounded-full border`}>
+                } text-[10px] font-bold uppercase tracking-widest rounded-full border`}>
                   <HiCheckCircle size={14} /> {proj.status}
                 </div>
               )}
@@ -77,17 +81,17 @@ export default function Projects() {
                   </a>
                 </div>
                 
-                <h3 className="text-2xl font-bold mb-4 group-hover:text-indigo-400 transition-colors">
+                <h3 className="text-2xl font-bold mb-4 group-hover:text-indigo-400 transition-colors leading-tight">
                   {proj.name}
                 </h3>
-                <p className="text-gray-400 text-base leading-relaxed mb-8">
+                <p className="text-gray-400 text-sm sm:text-base leading-relaxed mb-8">
                   {proj.description}
                 </p>
               </div>
 
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-2 sm:gap-3">
                 {proj.tags.map((tag) => (
-                  <span key={tag} className="text-xs font-semibold px-3 py-1.5 bg-gray-800/80 text-gray-300 rounded-lg border border-gray-700 group-hover:border-gray-600 transition-colors">
+                  <span key={tag} className="text-[10px] sm:text-xs font-semibold px-3 py-1.5 bg-gray-800/80 text-gray-300 rounded-lg border border-gray-700 group-hover:border-gray-600 transition-colors">
                     {tag}
                   </span>
                 ))}
