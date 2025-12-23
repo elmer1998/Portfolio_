@@ -3,6 +3,13 @@ import { HiExternalLink, HiCode, HiCheckCircle } from "react-icons/hi";
 export default function Projects() {
   const projects = [
     {
+      name: "High-Performance HTTP Server",
+      description: "A custom C++ systems project engineered from scratch to manage raw socket connections. Features a multi-threaded architecture capable of handling 100+ concurrent TCP handshakes with zero packet loss.",
+      tags: ["C++", "WinSock2", "Multi-threading", "Networking"],
+      link: "#", // Add your GitHub link here
+      status: "Completed"
+    },
+    {
       name: "Personal AI RAG Assistant",
       description: "A local, privacy-focused RAG engine built with FastAPI and Qwen 2.5. Implements a complete vector pipeline using ChromaDB for document indexing and real-time streaming Q&A over private text data.",
       tags: ["FastAPI", "LangChain", "Hugging Face", "ChromaDB"],

@@ -45,7 +45,7 @@ export default function About() {
               <HiLightningBolt className="mr-2" /> Current Learning Focus
             </h4>
             <p className="text-sm leading-relaxed">
-              I am currently diving deep into <span className="text-white font-medium">Retrieval-Augmented Generation (RAG)</span> 
+              I am currently diving deep into <span className="text-white font-medium">Retrieval-Augmented Generation (RAG) </span> 
               and local LLM implementations, exploring how AI can make information more accessible and useful.
             </p>
           </div>
