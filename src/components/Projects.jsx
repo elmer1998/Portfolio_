@@ -1,47 +1,41 @@
-import { HiExternalLink, HiCode, HiCheckCircle } from "react-icons/hi";
+import { HiCode, HiCheckCircle, HiInformationCircle } from "react-icons/hi"; // Added Information icon
 
 export default function Projects() {
   const projects = [
     {
-      name: "High-Performance HTTP Server",
-      description: "A custom C++ systems project engineered from scratch to manage raw socket connections. Features a multi-threaded architecture capable of handling 100+ concurrent TCP handshakes with zero packet loss.",
-      tags: ["C++", "WinSock2", "Multi-threading", "Networking"],
-      link: "#", // Add your GitHub link here
-      status: "Completed"
-    },
-    {
       name: "Personal AI RAG Assistant",
       description: "A local, privacy-focused RAG engine built with FastAPI and Qwen 2.5. Implements a complete vector pipeline using ChromaDB for document indexing and real-time streaming Q&A over private text data.",
       tags: ["FastAPI", "LangChain", "Hugging Face", "ChromaDB"],
-      link: "#",
       status: "Completed"
     },
     {
       name: "Simple Task Management System",
       description: "A full-stack React/Django productivity engine featuring JWT authentication, real-time state synchronization, and a fixed-viewport glassmorphism UI with optimized container scrolling.",
       tags: ["React", "Django REST", "JWT", "Tailwind v4"],
-      link: "#", 
+      status: "Completed"
+    },
+    {
+      name: "High-Performance HTTP Server",
+      description: "A custom C++ systems project engineered from scratch to manage raw socket connections. Features a multi-threaded architecture capable of handling 100+ concurrent TCP handshakes with zero packet loss.",
+      tags: ["C++", "WinSock2", "Multi-threading", "Networking"],
       status: "Completed"
     },
     {
       name: "Manufacturing ERP System",
       description: "A custom enterprise solution built with Django and MySQL. Automated production logs and improved data entry efficiency by 40%.",
       tags: ["Django", "MySQL", "Bootstrap"],
-      link: "#",
       status: "In Progress"
     },
     {
       name: "Responsive Blog & CMS",
       description: "A modern headless CMS featuring Markdown support and SEO optimization. Focuses on content management and real-time previews.",
       tags: ["React", "Tailwind", "Django API"],
-      link: "#",
       status: "In Progress"
     },
     {
       name: "Real-time Chat Application",
       description: "A secure, instant messaging platform utilizing WebSockets for real-time data sync across multiple clients.",
       tags: ["Node.js", "Socket.io", "React"],
-      link: "#",
       status: "In Progress"
     },
   ];
@@ -49,7 +43,6 @@ export default function Projects() {
   return (
     <section 
       id="projects" 
-      /* scroll-mt-20 ensures the navbar doesn't cover the title when clicking the link */
       className="py-20 bg-gray-800 text-white px-4 sm:px-8 scroll-mt-20"
     >
       <div className="max-w-6xl mx-auto">
@@ -83,9 +76,6 @@ export default function Projects() {
                   <div className="p-4 bg-indigo-500/10 rounded-2xl text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white transition-all duration-300">
                     <HiCode size={28} />
                   </div>
-                  <a href={proj.link} className="text-gray-500 hover:text-white transition-colors p-2">
-                    <HiExternalLink size={26} />
-                  </a>
                 </div>
                 
                 <h3 className="text-2xl font-bold mb-4 group-hover:text-indigo-400 transition-colors leading-tight">
@@ -106,6 +96,15 @@ export default function Projects() {
             </div>
           ))}
         </div>
+
+        {/* --- NEW REMINDER SECTION --- */}
+        <div className="mt-16 flex items-center justify-center gap-3 p-4 bg-indigo-500/5 border border-indigo-500/20 rounded-2xl max-w-2xl mx-auto">
+          <HiInformationCircle className="text-indigo-400 shrink-0" size={20} />
+          <p className="text-gray-400 text-xs sm:text-sm text-center">
+            Projects marked as <span className="text-emerald-400 font-semibold">Completed</span> are fully functional and ready for live demonstration on my local machine upon request.
+          </p>
+        </div>
+        {/* ---------------------------- */}
       </div>
     </section>
   );
