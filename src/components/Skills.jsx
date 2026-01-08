@@ -1,57 +1,107 @@
-import { HiCode, HiDatabase, HiLightningBolt, HiDeviceMobile } from "react-icons/hi";
+import { 
+  HiCode, 
+  HiDatabase, 
+  HiTerminal, 
+  HiServer,
+  HiChevronRight,
+  HiVariable
+} from "react-icons/hi";
 
 export default function Skills() {
   const categories = [
     {
-      title: "Frontend Development",
-      icon: <HiCode className="text-indigo-400" />,
-      skills: ["React", "Next.js", "Tailwind CSS", "Bootstrap", "JavaScript (ES6+)"]
+      title: "frontend_arch",
+      icon: <HiCode />,
+      color: "text-indigo-400",
+      skills: ["React 18", "Next.js", "Tailwind CSS", "TypeScript", "JavaScript"]
     },
     {
-      title: "Backend & Frameworks",
-      icon: <HiLightningBolt className="text-yellow-400" />,
-      skills: ["Python (Django)", "PHP (Laravel)", "Node.js", "REST APIs"]
+      title: "backend_systems",
+      icon: <HiServer />,
+      color: "text-emerald-400",
+      skills: ["Python/Django", "Node.js", "FastAPI", "PHP/Laravel", "REST_APIs"]
     },
     {
-      title: "Database & Storage",
-      icon: <HiDatabase className="text-emerald-400" />,
-      skills: ["MySQL", "PostgreSQL", "SQLite", "Firebase", "MongoDB"]
+      title: "data_persistence",
+      icon: <HiDatabase />,
+      color: "text-amber-400",
+      skills: ["PostgreSQL", "MySQL", "ChromaDB", "MongoDB", "Redis"]
     },
     {
-      title: "Emerging & Tools",
-      icon: <HiDeviceMobile className="text-pink-400" />,
-      skills: ["Git/GitHub", "Chart.js", "Socket.io", "FastAPI"]
+      title: "infrastructure",
+      icon: <HiTerminal />,
+      color: "text-rose-400",
+      skills: ["C++_Systems", "Git/GitHub", "Docker", "Socket.io", "Linux_CLI"]
     }
   ];
 
   return (
-    <section id="skills" className="py-24 bg-gray-900 text-white px-4 sm:px-8">
+    <section id="skills" className="py-24 bg-[#020617] text-slate-300 px-6 font-['JetBrains_Mono',monospace]">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4">Technical Expertise</h2>
-          <div className="w-20 h-1 bg-indigo-500 mx-auto rounded-full"></div>
-          <p className="text-gray-400 mt-4">A breakdown of my technical stack and development tools.</p>
+        
+        {/* Header styled as a Terminal Command */}
+        <div className="mb-20">
+          <div className="flex items-center gap-2 text-indigo-500 mb-4">
+            <HiVariable />
+            <span className="text-xs font-bold uppercase tracking-widest">cat system_capabilities.json</span>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tighter">
+            Technical_<span className="text-indigo-500">Stack</span>
+          </h2>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Categories Grid - Tree View Style */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/5 border border-white/5">
           {categories.map((cat) => (
-            <div key={cat.title} className="bg-gray-800/50 border border-gray-700 p-6 rounded-2xl hover:border-indigo-500/30 transition-all">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="text-2xl p-2 bg-gray-900 rounded-lg">{cat.icon}</div>
-                <h3 className="font-bold text-lg">{cat.title}</h3>
+            <div 
+              key={cat.title} 
+              className="group bg-[#020617] p-8 hover:bg-white/[0.01] transition-colors relative overflow-hidden"
+            >
+              {/* Background Label */}
+              <div className="absolute right-[-10px] top-[-10px] text-6xl font-bold opacity-[0.02] select-none pointer-events-none group-hover:opacity-[0.05] transition-opacity">
+                {cat.title.split('_')[0]}
               </div>
-              <div className="flex flex-wrap gap-2">
-                {cat.skills.map((skill) => (
-                  <span
+
+              <div className="flex items-center gap-4 mb-8">
+                <div className={`${cat.color} text-2xl opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all`}>
+                  {cat.icon}
+                </div>
+                <h3 className="text-lg font-bold text-white lowercase">
+                  <span className="text-slate-600">const</span> {cat.title} <span className="text-indigo-500">=</span> [
+                </h3>
+              </div>
+
+              {/* Skills List with Code Line Numbers */}
+              <div className="grid grid-cols-1 gap-y-3 pl-8 border-l border-white/10">
+                {cat.skills.map((skill, index) => (
+                  <div
                     key={skill}
-                    className="px-3 py-1 bg-gray-900/80 text-gray-300 rounded-md text-sm border border-gray-700"
+                    className="flex items-center gap-4 group/item"
                   >
-                    {skill}
-                  </span>
+                    <span className="text-[10px] text-slate-600 w-4 select-none">0{index + 1}</span>
+                    <HiChevronRight className="text-indigo-500/50 group-hover/item:text-indigo-500 transition-colors" />
+                    <span className="text-sm tracking-tight text-slate-400 group-hover/item:text-white transition-colors">
+                      "{skill}"{index !== cat.skills.length - 1 ? "," : ""}
+                    </span>
+                  </div>
                 ))}
+              </div>
+              
+              <div className="mt-6 text-lg font-bold text-white lowercase">
+                ];
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Footer Prompt */}
+        <div className="mt-16 flex items-center gap-4 text-slate-500">
+          <span className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+            <span className="text-[10px] uppercase tracking-widest font-bold">Compiler: Ready</span>
+          </span>
+          <div className="h-px flex-1 bg-white/5"></div>
+          <span className="text-[10px] uppercase tracking-widest font-bold">v1.4.0_STABLE</span>
         </div>
       </div>
     </section>

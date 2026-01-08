@@ -4,6 +4,11 @@ html {
   scroll-behavior: smooth;
 }
 
+body {
+  overflow-x: hidden;
+  background-color: #020617; /* Matches your theme */
+}
+
 section {
   scroll-margin-top: 64px; /* mobile default */
 }
