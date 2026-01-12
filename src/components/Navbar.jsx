@@ -1,12 +1,20 @@
 import { useState, useEffect, useMemo } from "react";
-import { HiMenuAlt3, HiX } from "react-icons/hi";
+import { HiMenuAlt3, HiX, HiCode } from "react-icons/hi";
+import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("home");
   const [scrolled, setScrolled] = useState(false);
 
-  // useMemo prevents unnecessary re-renders of the observer logic
+  // Scroll Progress Logic
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
   const links = useMemo(() => [
     { name: "Home", href: "#home", icon: "01" },
     { name: "About", href: "#about", icon: "02" },
@@ -15,16 +23,12 @@ export default function Navbar() {
     { name: "Contact", href: "#contact", icon: "05" },
   ], []);
 
-  // Handle background change on scroll
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Logic to highlight the active section as you scroll
   useEffect(() => {
     const observers = [];
     links.forEach((link) => {
@@ -33,14 +37,10 @@ export default function Navbar() {
         const observer = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
-              // Using a threshold and rootMargin to trigger the change 
-              // when the section is roughly in the middle of the viewport
-              if (entry.isIntersecting) {
-                setActive(link.href.substring(1));
-              }
+              if (entry.isIntersecting) setActive(link.href.substring(1));
             });
           },
-          { rootMargin: "-40% 0px -40% 0px", threshold: 0.1 }
+          { rootMargin: "-45% 0px -45% 0px", threshold: 0.1 }
         );
         observer.observe(section);
         observers.push(observer);
@@ -50,31 +50,38 @@ export default function Navbar() {
   }, [links]);
 
   return (
-    <nav 
-      className={`fixed top-0 left-0 w-full z-[100] px-6 transition-all duration-500 ease-in-out font-['JetBrains_Mono',monospace] 
-      ${scrolled ? "py-4" : "py-8"}`}
-    >
+    <nav className={`fixed top-0 left-0 w-full z-[100] px-4 md:px-12 transition-all duration-500 font-['JetBrains_Mono',monospace]`}>
+      
+      {/* SCROLL PROGRESS BAR */}
+      <motion.div 
+        className="absolute bottom-0 left-0 right-0 h-[2px] bg-indigo-500 origin-left z-50"
+        style={{ scaleX }}
+      />
+
       <div 
-        className={`max-w-6xl mx-auto flex justify-between items-center px-6 py-3 rounded-md transition-all duration-500 border 
+        className={`max-w-7xl mx-auto flex justify-between items-center transition-all duration-500 mt-4 px-6 py-3 rounded-xl border
         ${scrolled 
-          ? "bg-[#020617]/90 backdrop-blur-md border-white/10 shadow-2xl" 
+          ? "bg-[#020617]/80 backdrop-blur-xl border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.5)]" 
           : "bg-transparent border-transparent"
         }`}
       >
-        {/* LOGO AREA */}
-        <a href="#home" className="flex items-center gap-3 group cursor-pointer">
-          <div className="flex items-center text-indigo-500 font-bold text-sm">
-            <span>[</span>
-            <div className="w-2 h-2 bg-indigo-500 rounded-full mx-1 group-hover:animate-ping"></div>
-            <span>]</span>
+        {/* LOGO SECTION */}
+        <a href="#home" className="flex items-center gap-3 group">
+          <div className="relative flex items-center justify-center bg-indigo-500/10 p-2 rounded-lg border border-indigo-500/20">
+            <HiCode className="text-indigo-500 text-xl group-hover:rotate-12 transition-transform" />
           </div>
-          <h1 className="text-[11px] md:text-[13px] font-bold tracking-tighter text-white uppercase">
-            EA_<span className="text-indigo-400">ALICAWAY</span>
-            <span className="opacity-40">.init()</span>
-          </h1>
+          <div className="flex flex-col">
+            <h1 className="text-xs md:text-sm font-black tracking-widest text-white leading-tight">
+              {scrolled ? "LUKZ" : "EA_ALICAWAY"}
+            </h1>
+            <div className="flex items-center gap-1.5">
+              <span className="w-1 h-1 bg-emerald-500 rounded-full animate-pulse"></span>
+              <span className="text-[7px] text-slate-500 font-bold uppercase tracking-[0.2em]">Live_Session</span>
+            </div>
+          </div>
         </a>
 
-        {/* DESKTOP MENU */}
+        {/* DESKTOP NAV */}
         <ul className="hidden md:flex items-center gap-2">
           {links.map((link) => {
             const isActive = active === link.href.substring(1);
@@ -82,18 +89,25 @@ export default function Navbar() {
               <li key={link.name} className="relative">
                 <a
                   href={link.href}
-                  className={`group flex items-center gap-2 px-4 py-1 text-[10px] uppercase tracking-widest transition-all duration-300 ${
-                    isActive ? "text-white font-bold" : "text-slate-500 hover:text-slate-300"
-                  }`}
+                  className={`relative z-10 flex items-center gap-2 px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition-all duration-300
+                  ${isActive ? "text-white" : "text-slate-500 hover:text-slate-200"}`}
                 >
-                  <span className={`text-[9px] ${isActive ? "text-indigo-500" : "text-slate-700"}`}>
-                    {link.icon}
+                  <span className={`text-[9px] ${isActive ? "text-indigo-400" : "text-slate-700"}`}>
+                    /{link.icon}
                   </span>
                   {link.name}
-                  
-                  {/* Underline for Active State */}
+
                   {isActive && (
-                    <div className="absolute -bottom-1 left-4 right-4 h-[2px] bg-indigo-500 shadow-[0_0_12px_#6366f1]"></div>
+                    <motion.div 
+                      layoutId="nav-pill"
+                      className="absolute inset-0 bg-white/5 border border-white/10 rounded-lg z-[-1]"
+                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    >
+                      <motion.div 
+                        layoutId="nav-glow"
+                        className="absolute inset-0 bg-indigo-500/10 blur-md"
+                      />
+                    </motion.div>
                   )}
                 </a>
               </li>
@@ -101,37 +115,86 @@ export default function Navbar() {
           })}
         </ul>
 
-        {/* MOBILE MENU TOGGLE */}
+        {/* RIGHT SIDE: STATUS */}
+        <div className="hidden lg:flex items-center gap-6 pl-6 border-l border-white/10">
+            <div className="flex flex-col items-end">
+              <span className="text-[7px] text-slate-500 uppercase font-black">Kernel_Status</span>
+              <span className="text-[9px] text-indigo-400 font-bold tracking-tighter italic">V2.4.0_Stable</span>
+            </div>
+            <button className="h-8 px-3 rounded border border-white/10 bg-white/5 flex items-center justify-center gap-2 group hover:border-indigo-500/50 transition-colors">
+               <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping"></div>
+               <span className="text-[9px] text-white font-black uppercase tracking-widest">Active</span>
+            </button>
+        </div>
+
+        {/* MOBILE TOGGLE */}
         <button 
           onClick={() => setOpen(!open)}
-          className="md:hidden p-2 text-slate-400 hover:text-white transition-colors border border-white/10 rounded-md bg-white/5"
+          className="md:hidden w-10 h-10 flex items-center justify-center rounded-lg border border-white/10 bg-[#0b0e14] text-white"
         >
-          {open ? <HiX size={20} /> : <HiMenuAlt3 size={20} />}
+          <AnimatePresence mode="wait">
+            {open ? <HiX key="x" size={18} /> : <HiMenuAlt3 key="menu" size={18} />}
+          </AnimatePresence>
         </button>
       </div>
 
-      {/* MOBILE MENU OVERLAY */}
-      <div className={`md:hidden absolute top-24 left-6 right-6 bg-[#020617] border border-white/10 rounded-lg transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] overflow-hidden ${
-        open ? "max-h-[500px] opacity-100 shadow-3xl py-8" : "max-h-0 opacity-0 pointer-events-none"
-      }`}>
-        <ul className="flex flex-col px-8 gap-6">
-          {links.map((link) => (
-            <li key={link.name}>
-              <a
-                href={link.href}
-                onClick={() => setOpen(false)}
-                className={`flex items-center gap-4 text-[11px] font-bold uppercase tracking-[0.3em] transition-colors ${
-                  active === link.href.substring(1) ? "text-indigo-400" : "text-slate-600"
-                }`}
-              >
-                <span className="text-[9px] opacity-30">{link.icon}</span>
-                {link.name}
-                {active === link.href.substring(1) && <span className="animate-pulse">_</span>}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {/* MOBILE OVERLAY */}
+      <AnimatePresence>
+        {open && (
+          <>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setOpen(false)}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm md:hidden"
+            />
+            <motion.div 
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="md:hidden fixed top-0 right-0 h-screen w-[75%] bg-[#020617] border-l border-white/10 p-8 shadow-2xl z-[101]"
+            >
+              <div className="flex flex-col h-full">
+                <div className="flex justify-between items-center mb-12">
+                   <span className="text-[10px] text-indigo-500 font-black tracking-widest uppercase">System_Menu</span>
+                   <HiX onClick={() => setOpen(false)} className="text-slate-500 cursor-pointer" />
+                </div>
+
+                <nav className="flex flex-col gap-6">
+                  {links.map((link, i) => (
+                    <motion.a
+                      key={link.name}
+                      href={link.href}
+                      onClick={() => setOpen(false)}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.1 }}
+                      className="flex items-center justify-between group"
+                    >
+                      <div className="flex flex-col">
+                        <span className="text-[9px] text-indigo-500/50 font-black tracking-widest uppercase mb-1">/{link.icon}</span>
+                        <span className={`text-2xl font-black tracking-tighter uppercase transition-colors ${active === link.href.substring(1) ? "text-white" : "text-slate-600"}`}>
+                          {link.name}
+                        </span>
+                      </div>
+                      {active === link.href.substring(1) && (
+                        <div className="w-8 h-[2px] bg-indigo-500"></div>
+                      )}
+                    </motion.a>
+                  ))}
+                </nav>
+
+                <div className="mt-auto pt-8 border-t border-white/5">
+                   <p className="text-[10px] text-slate-600 font-bold uppercase tracking-widest">Signed_In_As</p>
+                   <p className="text-sm text-white font-black">LUKZ_ALICAWAY</p>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }

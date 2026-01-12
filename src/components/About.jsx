@@ -1,102 +1,151 @@
-import { HiDownload, HiLightningBolt, HiLocationMarker, HiCode } from "react-icons/hi";
+import { HiDownload, HiLightningBolt, HiLocationMarker, HiTerminal } from "react-icons/hi";
+import { HiCpuChip, HiShieldCheck, HiLink } from "react-icons/hi2"; 
+import { motion } from "framer-motion";
 
 export default function About() {
   return (
     <section
       id="about"
-      className="min-h-screen flex flex-col lg:flex-row justify-center items-center gap-16 lg:gap-24 px-8 py-24 bg-[#020617] text-slate-400 font-['JetBrains_Mono',monospace] overflow-hidden"
+      className="relative min-h-screen flex flex-col lg:flex-row justify-center items-center gap-16 lg:gap-32 px-8 py-24 bg-[#020617] text-slate-400 font-['JetBrains_Mono',monospace] overflow-hidden"
     >
-      {/* Profile Image - IDE Tab Style */}
-      <div className="relative group lg:order-2">
-        {/* Glow Effect */}
-        <div className="absolute -inset-4 bg-indigo-500/10 rounded-xl blur-2xl group-hover:bg-indigo-500/20 transition-all duration-700"></div>
-        
-        {/* Image Container resembling a File Preview */}
-        <div className="relative w-64 h-80 sm:w-72 sm:h-96 bg-[#0b0e14] border border-white/10 rounded-lg overflow-hidden shadow-2xl transition-transform duration-500 group-hover:-translate-y-2">
-          {/* Header Bar */}
-          <div className="flex items-center gap-2 px-3 py-2 bg-white/5 border-b border-white/5">
-            <div className="w-2 h-2 rounded-full bg-slate-600"></div>
-            <span className="text-[9px] uppercase tracking-widest text-slate-500">profile_picture.jpg</span>
-          </div>
-          
-          <img 
-            src="/Portfolio_/about_me.jpg" 
-            alt="EA Alicaway" 
-            className="object-cover w-full h-full grayscale hover:grayscale-0 transition-all duration-700 ease-in-out opacity-80 group-hover:opacity-100" 
-          />
-
-          {/* Location Tag - Terminal Style */}
-          <div className="absolute bottom-4 left-4 right-4 bg-[#020617]/90 backdrop-blur-md border border-white/10 p-3 rounded-md flex items-center gap-3">
-            <HiLocationMarker className="text-indigo-500" />
-            <span className="text-[10px] font-bold uppercase tracking-tighter text-slate-300">
-              LOC: <span className="text-white">Davao_Region, PH</span>
-            </span>
-          </div>
-        </div>
+      {/* Background Subtle Hardware Decor */}
+      <div className="absolute top-1/4 right-0 opacity-[0.03] pointer-events-none">
+        <HiCpuChip size={600} className="text-indigo-500 rotate-12" />
       </div>
 
-      {/* Content Side */}
-      <div className="text-left max-w-2xl z-10">
-        <div className="flex items-center gap-3 mb-4">
-          <HiCode className="text-indigo-500 text-xl" />
-          <span className="text-indigo-500/50 text-sm font-light italic">{"<biography>"}</span>
+      {/* LEFT SIDE: ENLARGED IDE-Style Image Container */}
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.9 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="relative group lg:order-2"
+      >
+        {/* Glow Aura */}
+        <div className="absolute -inset-10 bg-indigo-500/10 rounded-full blur-[100px] group-hover:bg-indigo-500/20 transition-all duration-1000"></div>
+        
+        {/* The Frame: Increased width to w-80 and sm:w-96 */}
+        <div className="relative w-80 h-[480px] sm:w-[400px] sm:h-[550px] bg-[#0b0e14] border border-white/10 rounded-xl overflow-hidden shadow-[0_0_50px_-12px_rgba(0,0,0,0.8)] transition-all duration-500 group-hover:border-indigo-500/40">
+          
+          {/* Header Bar */}
+          <div className="flex items-center justify-between px-5 py-3 bg-white/5 border-b border-white/5">
+            <div className="flex gap-2">
+              <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56]"></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]"></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-[#27c93f]"></div>
+            </div>
+            <span className="text-[9px] uppercase tracking-[0.3em] text-slate-500 font-bold">profile_view.exec</span>
+          </div>
+          
+          {/* Image with Scanline Effect */}
+          <div className="relative h-full w-full">
+            <img 
+              src="./about_me.jpg" 
+              alt="EA Alicaway" 
+              className="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-1000 opacity-70 group-hover:opacity-100 scale-105 group-hover:scale-100" 
+            />
+            {/* Moving Scanline */}
+            <motion.div 
+              animate={{ top: ["0%", "100%"] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+              className="absolute left-0 right-0 h-[2px] bg-indigo-500/30 z-20 shadow-[0_0_15px_rgba(99,102,241,0.5)]"
+            />
+          </div>
+
+          {/* Overlay Status */}
+          <div className="absolute top-16 right-4 flex flex-col gap-2">
+            <div className="px-2 py-1 bg-black/60 backdrop-blur-md border border-white/10 rounded text-[8px] text-emerald-400 font-bold">
+              AUTH: VERIFIED
+            </div>
+            <div className="px-2 py-1 bg-black/60 backdrop-blur-md border border-white/10 rounded text-[8px] text-indigo-400 font-bold">
+              LVL: JUNIOR_DEV
+            </div>
+          </div>
+
         </div>
 
-        <h2 className="text-3xl md:text-5xl font-bold mb-8 tracking-tighter text-white">
-          Decoding the <br />
-          <span className="text-indigo-500">Human Behind the Code</span>
+        {/* Floating Data Decor */}
+        <div className="hidden xl:block absolute -right-20 top-1/4 space-y-4">
+           <div className="flex items-center gap-2 text-[10px] text-slate-600 font-bold">
+             <HiShieldCheck className="text-indigo-500" /> SYSTEM_ENCRYPTED
+           </div>
+           <div className="flex items-center gap-2 text-[10px] text-slate-600 font-bold">
+             <HiLink className="text-indigo-500" /> PORT_8080: OPEN
+           </div>
+        </div>
+      </motion.div>
+
+      {/* RIGHT SIDE: Content Section */}
+      <motion.div 
+        initial={{ opacity: 0, x: -50 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="text-left max-w-2xl z-10"
+      >
+        <div className="flex items-center gap-3 mb-6">
+          <HiTerminal className="text-indigo-500 text-xl" />
+          <span className="text-indigo-500/60 text-[10px] font-black tracking-[0.3em] uppercase">./Who_Am_I.sh</span>
+        </div>
+
+        <h2 className="text-5xl md:text-7xl font-black mb-10 tracking-tighter text-white leading-[0.9]">
+          Engineered for <br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-indigo-600">Performance.</span>
         </h2>
         
-        <div className="space-y-6 text-sm md:text-base leading-relaxed border-l-2 border-indigo-500/20 pl-6">
-          <p>
-            I am <span className="text-white font-bold">Elmer Alexis Alicaway</span>. My engineering philosophy is built on the belief that 
-            <span className="text-slate-200"> code efficiency</span> should never compromise 
-            <span className="text-indigo-400"> user accessibility</span>.
+        <div className="space-y-8 text-sm md:text-base leading-relaxed border-l-2 border-indigo-500/20 pl-10 relative">
+          <div className="p-4 bg-white/[0.03] rounded-lg border border-white/5 inline-block">
+            <p className="font-bold">
+              <span className="text-indigo-400">class</span> <span className="text-white">Developer</span> {'{'} <br />
+              &nbsp;&nbsp;name = <span className="text-green-400">"Elmer Alexis Alicaway"</span>;<br />
+              &nbsp;&nbsp;focus = <span className="text-green-400">["Scalability", "UX", "RAG"]</span>;<br />
+              {'}'}
+            </p>
+          </div>
+
+          <p className="text-slate-400 max-w-lg">
+            My engineering philosophy centers on the idea that 
+            <span className="text-white font-bold"> code efficiency</span> should never sacrifice 
+            <span className="text-indigo-400"> user experience</span>. I build architectures that are as 
+            robust as they are elegant.
           </p>
 
-          <p>
-            Operating at the intersection of <span className="text-white">Frontend Logic</span> and 
-            <span className="text-white"> Backend Architecture</span>, I focus on building systems that are as 
-            resilient as they are intuitive.
-          </p>
-
-          {/* Technical Focus Box */}
-          <div className="relative bg-indigo-500/5 border border-indigo-500/10 p-6 rounded-md mt-10 overflow-hidden group/box">
+          <div className="relative bg-indigo-500/5 border border-indigo-500/10 p-6 rounded-xl group/box hover:border-indigo-500/40 transition-all">
             <div className="flex items-center gap-3 mb-3">
               <HiLightningBolt className="text-yellow-500 animate-pulse" />
-              <h4 className="text-indigo-400 font-bold text-[10px] uppercase tracking-widest">
-                Current_Research.log
+              <h4 className="text-white font-black text-[10px] uppercase tracking-[0.2em]">
+                Current_Intelligence_Log
               </h4>
             </div>
             
-            <p className="text-[13px] text-slate-400">
-              Investigating <span className="text-white">Retrieval-Augmented Generation (RAG)</span> 
-              to implement context-aware AI models within edge environments.
+            <p className="text-[13px] text-slate-400 italic leading-relaxed">
+              Currently exploring <span className="text-indigo-400 font-bold underline underline-offset-4">RAG Pipelines </span> 
+              to bridge the gap between LLMs and real-time private datasets.
             </p>
           </div>
         </div>
 
-        {/* Action Bar */}
-        <div className="mt-12 flex flex-wrap items-center gap-6">
-          <a
-            href="/Portfolio_/Elmer Alexis - Resume.pdf" 
-            download="Elmer Alexis - Resume.pdf"
-            className="group flex items-center px-6 py-3 bg-white text-black hover:bg-indigo-500 hover:text-white font-bold uppercase tracking-widest text-[10px] transition-all active:scale-95"
+        <div className="mt-14 flex flex-wrap items-center gap-10">
+          <motion.a
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.95 }}
+            href="./Resume.pdf" 
+            download
+            className="group flex items-center px-10 py-5 bg-white text-black font-black uppercase tracking-[0.2em] text-[11px] rounded transition-all shadow-2xl shadow-white/5 hover:bg-indigo-600 hover:text-white"
           >
-            <HiDownload className="mr-2 text-base group-hover:-translate-y-1 transition-transform" />
-            fetch_resume.exe
-          </a>
+            <HiDownload className="mr-3 text-xl" />
+            Download_CV.exe
+          </motion.a>
           
-          <div className="flex items-center gap-2">
-            <div className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-ping"></div>
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
-              Status: <span className="text-slate-300">Open_for_Collaborations</span>
-            </span>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-3">
+              <div className="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_15px_#10b981]"></div>
+              <span className="text-[11px] font-black text-white tracking-[0.2em] uppercase">Status: Live</span>
+            </div>
+            <span className="text-[10px] text-slate-600 font-bold uppercase tracking-widest pl-5">Kernel: Stable</span>
           </div>
         </div>
-        
-        <div className="mt-4 text-indigo-500/50 text-sm font-light italic">{"</biography>"}</div>
-      </div>
+      </motion.div>
     </section>
   );
 }

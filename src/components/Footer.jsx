@@ -1,119 +1,88 @@
-import { FaGithub, FaLinkedin, FaEnvelope, FaArrowUp } from "react-icons/fa";
-import { HiTerminal, HiChevronRight } from "react-icons/hi";
-
-const NAVIGATION_LINKS = [
-  { name: "home", href: "#home" },
-  { name: "projects", href: "#projects" },
-  { name: "about", href: "#about" },
-  { name: "contact", href: "#contact" },
-];
-
-const SOCIAL_LINKS = [
-  { icon: <FaGithub size={18} />, href: "https://github.com/elmer1998", label: "github" },
-  { icon: <FaLinkedin size={18} />, href: "#", label: "linkedin" },
-  { icon: <FaEnvelope size={18} />, href: "mailto:alicawayelmeralexis@gmail.com", label: "email" },
-];
+import { HiTerminal, HiOutlineShieldCheck, HiOutlineDatabase, HiOutlineCloudUpload } from "react-icons/hi";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
+  const [time, setTime] = useState(new Date().toLocaleTimeString());
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  // Update clock every second
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(new Date().toLocaleTimeString([], { hour12: false }));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    <footer className="relative bg-[#020617] border-t border-white/5 pt-24 pb-12 px-6 font-['JetBrains_Mono',monospace] overflow-hidden">
-      {/* Visual Indicator of EOF (End of File) */}
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-indigo-500/20 to-transparent" />
-      
-      <div className="max-w-6xl mx-auto relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-16 mb-24">
+    <footer className="bg-[#020617] border-t border-white/5 font-['JetBrains_Mono',monospace]">
+      <div className="max-w-6xl mx-auto px-6 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           
-          {/* Brand/System Identity */}
-          <div className="md:col-span-5 space-y-6 text-center md:text-left">
-            <h2 className="text-xl font-bold tracking-tighter text-white uppercase">
-              EA_<span className="text-indigo-500">ALICAWAY</span>
-              <span className="opacity-40">.exit()</span>
-            </h2>
-            <p className="text-slate-500 text-sm leading-relaxed max-w-sm">
-              {"//"} Engineered with precision. Specializing in high-performance 
-              architectures where code meets human-centric design.
+          {/* COLUMN 1: SYSTEM IDENTITY */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 text-indigo-500">
+              <HiTerminal size={20} />
+              <span className="text-sm font-bold tracking-tighter uppercase">ALICAWAY_OS v2.4</span>
+            </div>
+            <p className="text-xs text-slate-500 leading-relaxed max-w-xs">
+              Built with <span className="text-slate-300">React 18</span>, 
+              <span className="text-slate-300"> Framer Motion</span>, and 
+              <span className="text-slate-300"> TailwindCSS</span>. 
+              Rendered in Davao, PH.
             </p>
-            <div className="flex justify-center md:justify-start gap-4">
-              {SOCIAL_LINKS.map((social, idx) => (
-                <a 
-                  key={idx}
-                  href={social.href}
-                  className="w-10 h-10 flex items-center justify-center bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:border-indigo-500 transition-all"
-                >
-                  {social.icon}
-                </a>
-              ))}
+          </div>
+
+          {/* COLUMN 2: SERVER LOGS (Decorative) */}
+          <div className="hidden md:block space-y-2">
+            <span className="text-[10px] text-slate-600 font-bold uppercase tracking-widest">System_Logs</span>
+            <div className="text-[10px] space-y-1">
+              <div className="flex gap-2 text-emerald-500/60">
+                <span>[OK]</span> <span className="text-slate-500">Portfolio_Data_Loaded</span>
+              </div>
+              <div className="flex gap-2 text-indigo-500/60">
+                <span>[INFO]</span> <span className="text-slate-500">Connection_Secure_TLS_1.3</span>
+              </div>
+              <div className="flex gap-2 text-amber-500/60 animate-pulse">
+                <span>[LIVE]</span> <span className="text-slate-400 font-bold italic underline">Awaiting_Inquiry...</span>
+              </div>
             </div>
           </div>
 
-          {/* Directory Column */}
-          <div className="md:col-span-3 flex flex-col items-center md:items-start">
-            <h3 className="text-indigo-500 font-bold mb-8 uppercase tracking-widest text-[10px]">
-              ./directory
-            </h3>
-            <ul className="space-y-4">
-              {NAVIGATION_LINKS.map((link) => (
-                <li key={link.name}>
-                  <a 
-                    href={link.href} 
-                    className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-xs uppercase tracking-tighter"
-                  >
-                    <HiChevronRight className="text-indigo-500" />
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* System Status Column */}
-          <div className="md:col-span-4 flex flex-col items-center md:items-end">
-            <h3 className="text-indigo-500 font-bold mb-8 uppercase tracking-widest text-[10px]">
-              system_info
-            </h3>
-            <div className="space-y-2 text-[11px] text-slate-500 text-center md:text-right">
-              <p>ENVIRONMENT: <span className="text-slate-300">PRODUCTION</span></p>
-              <p>LOCATION: <span className="text-slate-300">DAVAO_PH</span></p>
-              <p>UPTIME: <span className="text-slate-300">99.9%</span></p>
-            </div>
-            
-            <button 
-              onClick={scrollToTop}
-              className="mt-10 flex items-center gap-3 text-[10px] font-bold text-slate-400 hover:text-indigo-400 uppercase tracking-[0.3em] transition-all group"
-            >
-              sudo_reboot <FaArrowUp className="text-xs group-hover:-translate-y-1 transition-transform" />
-            </button>
+          {/* COLUMN 3: QUICK LINKS / METRICS */}
+          <div className="flex flex-col md:items-end justify-center space-y-4">
+             <div className="flex gap-6 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                <a href="#about" className="hover:text-indigo-400 transition-colors">.root</a>
+                <a href="#projects" className="hover:text-indigo-400 transition-colors">.work</a>
+                <a href="#skills" className="hover:text-indigo-400 transition-colors">.stack</a>
+                <a href="#contact" className="hover:text-indigo-400 transition-colors">.ping</a>
+             </div>
+             <div className="flex items-center gap-3 bg-white/5 px-4 py-2 rounded border border-white/5">
+                <HiOutlineShieldCheck className="text-emerald-500" />
+                <span className="text-[10px] text-slate-400 font-bold">ENCRYPTED_SESSION</span>
+             </div>
           </div>
         </div>
 
-        {/* Status Bar Bottom */}
-        <div className="border border-white/5 bg-white/[0.01] p-4 flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="flex items-center gap-4 text-[10px] uppercase font-bold text-slate-600">
+        {/* BOTTOM STATUS BAR */}
+        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-slate-600 font-bold tracking-[0.2em] uppercase">
+          <div className="flex items-center gap-4">
             <span className="flex items-center gap-2">
-              <HiTerminal className="text-indigo-500" />
-              USER: VISITOR_1
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
+              SYSTEM_READY
             </span>
-            <span className="hidden md:inline opacity-20">|</span>
-            <span>© {currentYear} EA_ALICAWAY</span>
+            <span className="hidden md:block">|</span>
+            <span className="flex items-center gap-2">
+              <HiOutlineDatabase /> DB_SYNC: ACTIVE
+            </span>
           </div>
-          
-          <div className="flex items-center gap-6 text-[9px] uppercase tracking-widest font-bold">
-            <div className="flex items-center gap-2">
-              <span className="text-slate-600">built_with:</span>
-              <span className="text-indigo-400">REACT</span>
-              <span className="w-1 h-1 bg-slate-700 rounded-full"></span>
-              <span className="text-indigo-400">TAILWIND</span>
-            </div>
-            <div className="hidden md:flex items-center gap-2">
-              <span className="text-slate-600">latency:</span>
-              <span className="text-emerald-500">14MS</span>
-            </div>
+
+          <div>
+             © 2026 ELMER_ALEXIS_ALICAWAY // NO_TRACKING_ENABLED
+          </div>
+
+          <div className="flex items-center gap-4 bg-indigo-500/5 px-3 py-1 rounded text-indigo-400 border border-indigo-500/10">
+            <HiOutlineCloudUpload className="animate-bounce" />
+            <span>LOC: {time} (UTC+8)</span>
           </div>
         </div>
       </div>
