@@ -5,4 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   base: "/Portfolio_/", // Just the repo name with slashes
+  build: {
+    sourcemap: false, // This makes your code much harder to read
+  }
 })
