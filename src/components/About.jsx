@@ -98,7 +98,7 @@ export default function About() {
             <p className="font-bold">
               <span className="text-indigo-400">class</span> <span className="text-white">Developer</span> {'{'} <br />
               &nbsp;&nbsp;name = <span className="text-green-400">"Elmer Alexis Alicaway"</span>;<br />
-              &nbsp;&nbsp;focus = <span className="text-green-400">["Scalability", "UX", "RAG"]</span>;<br />
+              &nbsp;&nbsp;focus = <span className="text-green-400">["Scalability", "UX", "RAG", "React", "Django"]</span>;<br />
               {'}'}
             </p>
           </div>
@@ -129,7 +129,7 @@ export default function About() {
           <motion.a
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
-            href="./Resume.pdf" 
+            href="./Elmer Alexis - Resume.pdf" 
             download
             className="group flex items-center px-10 py-5 bg-white text-black font-black uppercase tracking-[0.2em] text-[11px] rounded transition-all shadow-2xl shadow-white/5 hover:bg-indigo-600 hover:text-white"
           >
